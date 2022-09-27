@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+    crossorigin="anonymous" />
+  <style>
+    i {
+      font-size: 50px;
+    }
+
+    .golden {
+      color: gold;
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+Необязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+
+  <div class="stars_container">
+    <i class="fas fa-star">1</i>
+    <i class="fas fa-star">2</i>
+    <i class="fas fa-star">3</i>
+    <i class="fas fa-star">4</i>
+    <i class="fas fa-star">5</i>
+  </div>
+
+  <script>
+    "use strict";
+
+    /*
+    1. При наведении на любую из звезд, данной звезде должен ставиться класс
+    golden, также такой класс должен ставиться всем звездам до нее слева.
+    */
+    document.querySelectorAll('.fa-star').forEach((el) => {
+      el.addEventListener('mouseover', event => {
+        let star = event.target;
+        star.classList.add('golden');
+        console.dir(star.previousElementSibling);
+        let previousStar = star.previousElementSibling
+        do {
+          previousStar.classList.add('golden');
+          previousStar = previousStar.previousElementSibling
+        } while (previousStar);
+      })
+    });
+
+    /*
+    2. Когда мы уводим курсор мыши от звезды, все поставленные классы из первого
+    задания должны быть удалены.
+     */
+    document.querySelectorAll('.fa-star').forEach((el) => {
+      el.addEventListener('mouseout', event => {
+        el.classList.remove('golden');
+        let previousStar = el.previousElementSibling
+        do {
+          previousStar.classList.remove('golden');
+          previousStar = previousStar.previousElementSibling
+        } while (previousStar);
+      })
+    });
+
+    /*
+    3. Когда мы переводим мышь от одной звезды к другой, у нас могут мигать
+    звезды (временно могут становиться черными). Почему так? Напишите словами.
+    Можем ли мы это исправить? Если да, то предложите решение.
+    */
+    //Когда мы наводим курсор мыши на пробел между звездами срабатывает код под
+    //номером 2, childNodes в коде выглядит как #text I #text I #text I #text I #text I #text
+    //надо удалить ноды #text 
+    console.dir(document.querySelector('.stars_container'));
+    let arr = []
+    document.querySelector('.stars_container').childNodes.forEach(el => {
+      arr.push(el)
+    })
+    console.log(arr);
+    let arrFilt = arr.filter((el) => {
+      return el.nodeName === '#text'
+    })
+    console.log(arrFilt);
+    arrFilt.forEach(el => { el.remove() })
+
+  </script>
+</body>
+
+</html>
